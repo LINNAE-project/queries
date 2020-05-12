@@ -1,0 +1,27 @@
+#+ summary: Get species recorder by an entity (e.g. a person, group or organization).
+#+ tags:
+#+  - Get species recorded by an entity
+#+ defaults:
+#+  - entity: http://viaf.org/viaf/45106482
+
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+PREFIX dsw: <http://purl.org/dsw/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX nhc: <http://makingsense.liacs.nl/rdf/nhc/>
+PREFIX nc: <http://makingsense.liacs.nl/rdf/nc#>
+
+SELECT
+  DISTINCT ?species ?page
+WHERE {
+  ?identification dwciri:toTaxon ?taxon .
+  ?taxon rdfs:label ?species .
+  ?taxon nhc:taxonRank nc:species . 
+  ?organism dsw:hasIdentification ?identification .
+  ?organism dsw:hasOccurrence ?occurrence .
+  ?occurrence dwciri:recordedBy ?_entity_iri .
+  ?occurrence dsw:hasEvidence ?observationRecord . 
+  ?anno oa:hasBody ?observationRecord . 
+  ?anno oa:hasTarget ?page .
+}
