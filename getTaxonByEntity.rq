@@ -1,0 +1,37 @@
+#+ summary: Get taxon name(s) recorded by an entity (e.g. a person, group or organization).
+#+ tags:
+#+  - Get taxon name(s) recorded by an entity
+#+ enumerate:
+#+  - rank:
+#+    - http://makingsense.liacs.nl/rdf/nc#species
+#+    - http://makingsense.liacs.nl/rdf/nc#genus
+#+    - http://makingsense.liacs.nl/rdf/nc#family
+#+    - http://makingsense.liacs.nl/rdf/nc#order
+#+    - http://makingsense.liacs.nl/rdf/nc#class
+#+    - http://makingsense.liacs.nl/rdf/nc#phylum
+#+    - http://makingsense.liacs.nl/rdf/nc#kingdom
+#+    - http://makingsense.liacs.nl/rdf/nc#domain
+#+ defaults:
+#+  - entity: http://viaf.org/viaf/45106482
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX nhc: <http://makingsense.liacs.nl/rdf/nhc/>
+PREFIX nc: <http://makingsense.liacs.nl/rdf/nc#>
+PREFIX dwc: <http://rs.tdwg.org/dwc/>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+PREFIX dsw: <http://purl.org/dsw/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+
+SELECT
+  DISTINCT ?label ?page
+WHERE {
+  ?taxon rdfs:label ?label .
+  ?taxon nhc:taxonRank ?_rank_iri . 
+  ?identification dwciri:toTaxon ?taxon .
+  ?identification dsw:isBasedOn ?humanobservation .
+  ?annotation oa:hasBody ?humanobservation .
+  ?annotation oa:hasTarget ?page .
+  ?organism dsw:hasIdentification ?identification . 
+  ?occurrence dsw:occurrenceOf ?organism . 
+  ?occurrence dwciri:recordedBy ?_entity_iri .
+}
