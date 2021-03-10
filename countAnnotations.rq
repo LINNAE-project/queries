@@ -1,0 +1,16 @@
+#+ summary: Count annotations per annotator.
+#+ tags:
+#+  - Summary
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+
+SELECT
+	?annotator
+	(COUNT(*) AS ?n)
+WHERE {
+  ?anno a oa:Annotation ;
+  	dcterms:creator ?annotator .
+}
+GROUP BY ?annotator
+ORDER BY DESC(?n)

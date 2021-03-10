@@ -1,0 +1,15 @@
+#+ summary: Get annotated events.
+#+ tags:
+#+  - Annotation types
+
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+
+SELECT
+ ?annotation_iri
+ ?date
+WHERE {
+ ?annotation_iri oa:hasBody ?bnode .
+ ?bnode a dwc:Event ;
+  dwc:eventDate ?date .
+}

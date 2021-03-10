@@ -1,0 +1,24 @@
+#+ summary: Get taxa.
+#+ tags:
+#+  - Annotation types
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+
+SELECT
+	?annotation_iri
+	?taxon_name
+	?taxon_iri
+	?taxonrank_iri
+WHERE {
+  ?annotation_iri oa:hasBody ?bnode .
+  ?bnode a dwc:Taxon ;
+  	dwc:scientificName ?taxon_name .
+  OPTIONAL {
+    ?bnode dcterms:identifier ?taxon_iri .
+  }
+  OPTIONAL {
+   	?taxon_iri dwc:taxonRank ?taxonrank_iri .
+  }
+}

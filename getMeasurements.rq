@@ -1,0 +1,21 @@
+#+ summary: Get annotated measurements or facts.
+#+ tags:
+#+  - Annotation types
+
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/> 
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+
+SELECT
+ ?annotation_iri
+ ?measurement
+ ?measurement_iri
+WHERE {
+ ?annotation_iri oa:hasBody ?bnode .
+ ?bnode a dwc:MeasurementOrFact ;
+  rdf:value ?measurement .
+  OPTIONAL {
+   ?bnode dwciri:measurementType ?measurement_iri .
+  }
+}

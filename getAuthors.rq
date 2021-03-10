@@ -1,0 +1,21 @@
+#+ summary: Get annotated authors.
+#+ tags:
+#+  - Annotation types
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+
+SELECT
+ ?annotation_iri
+ ?author
+ ?author_iri
+WHERE {
+ ?annotation_iri oa:hasBody ?bnode .
+ ?bnode a foaf:Person ;
+  rdf:value ?author .
+  OPTIONAL {
+   ?bnode dcterms:identifier ?author_iri .
+  }
+}
