@@ -1,6 +1,6 @@
 ## queries
 
-This repository contains SPARQL queries used to generate a [grlc](http://grlc.io/)-based Web API for [this](http://makingsense.liacs.nl/rdf4j-server/repositories/NC) RDF store.
+This repository contains SPARQL queries used to generate a [grlc](http://grlc.io/)-based Web API.
 
 **Web API endpoint(s)**
 - base URL `http://CNAME:PORT` (default: `http://localhost:8088`) followed by
